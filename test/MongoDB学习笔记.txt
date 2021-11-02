@@ -1,0 +1,276 @@
+MongoDB 学习笔记
+collection切换：use <collection>
+collection查询：show collections
+一、CRUD基本操作
+1、Create
+	注：所有MongoDB支持的数据类型都可以作为文档主键(数组除外)
+	使用一个文档作为另一个文档的文档主键(复合主键)
+	db.collection.insert()
+		语法：db.<collection>.insert(<document or array of documents>,{writeConcern:<document>,ordered:<boolean>})
+		
+	db.collection.insertOne() //当文档集合不存在时会自动创建文档集合
+		语法：db.<collection>.insertOne(<document>,{writeConcern:<document>})
+		<document>:要写入的文档本身
+		writeConcern:定义了本次文档创建操作的安全写级别
+		acknowledge：true表示安全写级别被启用
+		insertedId:显示了被写入的文档的_id
+	db.collection.insertMany()
+		语法：db.<collection>.insertMany([<document1>,<document2>,...],{writeConcern:<document>,ordered:<boolean>})
+		ordered：默认值为true，参数用来决定是否需要按顺序写入，如果为false则可以打乱写入顺序，以便优化写入性能
+		
+	db.collection.save()
+		语法：db.<collection>.save(<document>,{writeConcern:<document>})
+	insertOne/insertMany/insert的区别
+		1、三个命令返回的结果文档格式不一样
+		2、insertOne和insertManey命令不支持db.collection.explain()命令，insert支持
+2、Read
+	db.collection.find() 返回的结果是一个文档集合的《游标》投射：只返回部分字段、内嵌文档的投射、数组的投射
+		语法：db.<collection>.find(<query>,<projection>)
+		<query>:文档定义了更新操作时筛选文档的条件
+		<projection>:投影文档，定义了对读取结果进行的投射(只返回文档中部分字段)
+		db.collection.find().pretty()
+		db.collection.find({},{name:1,_id:0})	只返回name字段切不返回_id（默认_id是会返回的 ）
+		注意：除文档id字段外，<projection> 里边要么就写要返回的所有字段，要么就写所有不需要返回的字段，name:1 表示返回name字段，name:0表示不要返回name字段
+	比较操作符
+		语法：{<field>:{$<operator>:<value>}}
+		$eq		等于
+		$ne		不等于
+		$gt		大于
+		$gte	大于等于
+		$lt		小于
+		$lte	小于等于
+		示例：db.collection.find({name:{$eq:"党未福"}})
+	比较操作符(筛选文档)
+		$in		匹配字段值与任一查询值相等的文档
+		语法：{field:{$in:[<value1>,<value2>...<value>]}}
+		$nin	匹配字段值与任一查询值都不相等的文档
+		语法：{field:{$nin:[<value1>,<value2>...<value>]}}
+	逻辑操作符
+		$not	匹配筛选条件不成立的文档（不包含字段的也算不满足条件）
+			语法：{field:{$not:{<operator-expression>}}}
+			<operator-expression>:条件表达式
+			示例：读取余额不小于500的银行账户文档
+			db.collection.find({balance:{$not:{$lt:500}}})
+		$and	匹配筛选条件全部成立的文档
+			语法：{$and:[{<expression1>},{<expression2>}...{<expressionN}]}
+		$or		匹配至少一个筛选条件成立的文档
+			语法：{$or:[{<expression1>},{<expression2>}...{<expressionN}]}
+		$nor	匹配多个筛选条件全部不成立的文档
+			语法：{$nor:[{<expression1>},{<expression2>}...{<expressionN}]}
+	字段操作符
+		$exists	匹配包含查询字段的文档
+			语法：{field:{$exists:<boolean>}}
+		$type	匹配字段类型符合查询值的文档
+			语法1：{field:{$type:<BSON type}}
+			语法2：{field:{$type:[<BSON type1>,<BSON type2>...]}}
+	数组操作符
+		$all	匹配数组字段中包含所有查询值的文档
+			语法：{<field>:{$all:[<value1>,<value2>...]}}
+		$elemMatch	匹配数组字段中至少存在一个值满足筛选条件的文档
+			语法：{<field>:{$elemMatch:{<query1>,<query2>...}}}
+	运算操作符（正则表达式操作符）
+		$regex	匹配满足正则表达式的文档（兼容PCRE v8.41正则表达式库）
+			语法1：{<field>:{:/pattern/,:'<options>'}}
+			语法2：{<field>:{:/pattern/<options>}} 和 $in操作符一起使用时只能使用当前语法格式
+	游标函数(find命令默认返回满足条件的文档的游标，默认列出当前游标下的前20个文档)
+		cursor.hasNext()
+		cursor.next()
+		cursor.forEach(<function>)
+		cursor.limit(<number>)
+		cursor.skip(<offset>)
+		cursor.count(<applySkipLimit>)	默认情况下，<applySkipLimit>为false，即cursor.count()不会考虑cursor.skip()和cursor.limit()的效果
+		cursor.sort(<document>)			<document>定义了排序的要求，1表示正向排序，-1表示逆向排序
+		sort()/skip()/limit() 执行顺序：sort->skip->limit
+3、Update
+	db.collection.update()
+	语法：db.<collection>.update(<query>,<update>,<options>)
+	<query> 文档定义了更新操作时筛选文档的条件
+	<update> 文档定义了需要做什么样的更新
+	<options> 文档声明了一些更新操作的参数或选项
+	注意：	1、文档主键不可以更改
+			2、替换整篇更新文档时，只有第一篇符合<query>文档筛选条件的文档会被更新
+	更新操作符：
+		$set	更新或新增字段	语法：{$set:{<field1>:<value1>,...}}
+		$unset	删除字段		语法：{$unset:{<field1>:"",...}}
+		$rename	重命名字段		语法：{$rename:{<field1>:<neamName1>,<field2>:<newName2>...}}
+			注：文档中不存在指定字段时，文档不会更新，如果新的name已存在在文档中时，文档中原字段将被覆盖
+		$inc	加减字段值		语法：{$inc:{<field1>:<amount1>,<field2>:<amount2>...}}
+			注：只能用在数字类型字段上，当字段不存在时，会创建字段并赋初始值0
+		$mul	相乘字段值		语法：{$mul:{<field1>:<number1>,<field2>:<number2>...}}
+			注：只能用在数字类型字段上，当字段不存在时，会创建字段并赋初始值0
+		$min	比较减小字段值	语法：{<field1>:<value1>,<field2>:<value2>...}
+			注：可用在任何可以比较大小的字段上，比较设置的值跟原有值并保留较小的值
+		$max	比较增大字段值	语法：{<field1>:<value1>,<field2>:<value2>...}
+			注：可用在任何可以比较大小的字段上，比较设置的值跟原有值并保留较大的值
+				被更新字段类型和更新值不一致时，$min $max 命令会按照BSON数据类型排序规则进行比较
+				BSON数据类型排序规则：
+					最小：	Null
+							Numbers（ints,longs,doubles,decimals）
+							Symbol,String
+							Object
+							Array
+							BinData
+							ObjectId
+							Date
+							Timestamp
+					最大：	Regular Expression
+		$each		迭代的意思
+		$pop		从数组字段中删除元素（尾删=1，头删=-1）
+			语法：{$pop:{<field>:<-1 | 1>,...}}
+			只能用在数组类型字段上
+		$pull		从数组字段中删除特定元素
+			语法：{$pull:{<field1>:<value|condition>,...}}
+		$pullAll	从数组中有选择性的移除元素
+			语法：{$pullAll:{<field1>:[<value1>,<value2>...],<field2>:[<value3>,<value4>...]}}
+		$push		向数组中添加元素
+			语法：{$push:{<field1>:<value1>,...}}
+			$push 搭配 $position 实现数组指定位置插入元素
+		$addToSet	向数组中添加元素
+			语法：{$addToSet:{<field1>:<value1>,<field2>:<value2>...}}
+			注：不会添加重复值
+		$position	将元素插入到数组指定位置
+		$sort 		对数组进行排序 $sort:1 = 升序 ，$sort:-1 =降序
+			注：$sort使用前提：有$push和$each的前提下才可以
+		$slice		截取数组部分元素
+			语法：{$slice:<number>} number>0 表示正序保留number个元素，反之亦然
+		注：$position和$sort和$slice的执行顺序(书写顺序不会影响执行顺序)：
+			position>sort>slice 
+	更新文档选项：
+		{multi:<boolean>}	更新多个文档
+		{upsert:<boolean>}	更新或创建文档true=创建；false=更新
+			注：upsert=true且update命令中筛选条件没有匹配到任何文档时会创建新文档
+	db.collection.findAndModify()
+	db.collection.save(<document>)
+		注：document中包含_id时，实际上底层调用了db.collection.update
+4、Delete
+	db.collection.remove()
+		语法：db.collection.remove(<query>,<options>)
+	删除文档选项：
+		{justOne:<boolean>} 限制一个文档
+	db.collection.drop()	删除指定集合
+		语法：db.collection.drop({writeConcern:<document>}) writeConcern文档定义了本次集合删除操作的安全写级别
+	
+二、聚合
+二·一	聚合操作
+1、单一用途的聚合方法
+2、Map Reduce
+3、聚合管道db.collection.aggregate() 	推荐
+二·二	聚合阶段
+1、聚合阶段有顺序的排列在聚合管道中
+2、绝大多数聚合阶段可以反复出现($out和$geoNear除外)
+3、数据库层面和集合层面
+二·三	聚合操作符
+1、用来构建聚合表达式
+2、聚合操作符语法：
+	语法1：{<operator>:[<argument1>,<argument2>...]}
+	语法2：{<operator>:<argument>}
+
+三、聚合操作
+	db.collection.aggregate()
+		语法：db.collection.aggregate(<pipeline>,<options>)
+		<options>文档声明了一些聚合操作的参数或选项
+	1、聚合表达式
+		字段路径表达式
+		$<field> - 使用$来指示字段路径 示例：$name - 指示银行账户文档中客户姓名的字段
+		$<field>.<sub-field> - 使用$和.来指示内嵌文档字段路径 示例：$info.dateOpened - 指示银行账户文档中开户日期的字段
+		系统变量表达式
+		$$<variable> - 使用$$来指示系统变量
+		$$CURRENT - 指示管道中当前操作的文档 
+		常量表达式
+		$literal:<value> - 指示常量<value>
+	2、聚合管道阶段
+		$project -	对输入的文档进行再次投射
+		$match -	对文档进行筛选
+		$limit -	筛选出管道内前N篇文档
+		$skip -		跳过关内道内前N篇文档
+		$unwind -	展开文档中的数组字段
+		$sort -		排序
+		$lookup -	对文档进行查询操作
+			语法：	$lookup:{
+						from:<collection to join>,
+						同一个数据库中的另一个查询集合
+						localField:<field from the input documents>,
+						管道文档中用来查询的字段
+						foreignField:<field from the documents of the "from" collection>,
+						查询集合中的查询字段
+						as:<output array field>
+						写入管道文档中的查询结果数组字段
+					}
+			语法：	$lookup:{
+						from:<collection to join>,
+						let:{var_1:<expression>,...,<var_n>:<expression>},
+						对查询集合中的文档使用聚合阶段进行处理时，如果需要参考管道文档中的字段，则需要使用let参数对字段进行声明
+						pipeline:[<pipeline to execute on the collection to join>],
+						对查询集合中的文档使用聚合阶段进行处理
+						as:<output array field>
+					}
+		$group -	分组
+			语法：	$group:{
+						_id:<expression>,
+						<field1>:{<accumulator1>:<expression>},
+						...
+					}
+		$out -		输出
+		$expr - ？
+		$sum -		求和操作符
+		$avg -		求均值
+		$max -		求最大值
+		$min -		求最小值
+		$multiply -	求积
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

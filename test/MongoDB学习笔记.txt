@@ -218,9 +218,63 @@ collection查询：show collections
 		$min -		求最小值
 		$multiply -	求积
 		
+五、索引
+	1、索引的定义：对文档部分内容进行排序的数据结构，加快文档查询和文档排序的速度，复合键索引只能支持前缀子查询。
+		
+	2、索引操作新建、修改、查询、删除
+		
+		db.collection.createIndex()
+			语法：db.collection.createIndex(<keys>,<options>)
+			<keys>文档定义了创建索引的字段
+		db.collection.getIndexes()
+		
+		db.collection.dropIndex(<params>)	params 可以是索引名称或索引定义 
+	3、索引类型：
+		单键索引	
+			不唯一	语法：db.collection.createIndex({key:1}) 	1=升序，-1=降序
+			唯一	语法：db.collection.createIndex({key:1},{unique:true}) 	1=升序，-1=降序
+		复合键索引 	语法：db.collection.createIndex({key:1,key2:-1}) 	1=升序，-1=降序
+		多键索引	用在数组字段上
+			语法：db.collection.createIndex({key:1}) 	1=升序，-1=降序
+	4、索引特新
+		唯一性
+			单键索引
+				不唯一	语法：db.collection.createIndex({key:1}) 	1=升序，-1=降序
+				唯一	语法：db.collection.createIndex({key:1},{unique:true}) 	1=升序，-1=降序
+		稀疏性
+			单键索引
+				只将包含索引键字段的文档加入到索引中(即使索引键字段值为null)
+				语法：db.collection.createIndex({key:1},{sparse:true})
+		生存时间(后台线程删除过期文档有一定的时间延迟)
+			单键索引
+				指定字段创建生存时间为n秒的索引
+				语法：db.collection.createIndex({key:1},{expireAfterSeconds:20})
+			复合键索引不具备索引生存时间特性	
+	5、查询分析
+		检视索引的效果
+		explain()
+			winningPlan:{
+				stage:COLLSCAN	集合扫描
+				stage:IXSCAN	索引扫描	
+				stage:PROJECTION	投射				
+				stage:SORT		排序阶段				
+				stage:FETCH		根据索引指定的文档查询复合条件的文档	
+			}
+		db.collection.explain().<mathod(...)>
+		可以使用explain()进行分析的命令包括aggregate(),count(),distinct(),find(),group(),remove(),update()
+	6、索引的选择
+		如何创建一个何时的索引
+		索引对数据库写入操作的影响
+	
 
-
-
+树形结构
+	1、可以通过parentId构建树形
+	2、可以通过children构建树形
+	3、可以通过ancestor构建树形(根节点到当前节点的path)
+	4、可以通过树遍历构建树形(优势：查操作便利，写操作繁琐，每次写操作都需要重新维护多个甚至全部节点的左右下标)
+		依据深度优先算法将整棵树遍历并增加左右下表编号
+		此时每个节点的左右下表具备再这样的特性：
+			所有子节点的做下标小于父节点，所有子节点的右下表大于父节点
 
 
 

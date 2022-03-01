@@ -166,9 +166,15 @@ collection查询：show collections
 	语法2：{<operator>:<argument>}
 
 三、聚合操作
-	db.collection.aggregate()
-		语法：db.collection.aggregate(<pipeline>,<options>)
-		<options>文档声明了一些聚合操作的参数或选项
+    整个聚合运算过程称为管道(Pipeline)，它是由多个步骤(Stage)组成的
+    每个管道：
+        接收一系列文档(原始数据)
+        每个步骤对这些文档进行一系列运算
+        结果文档输出给下一个步骤
+    语法：
+	db.<collection>.aggregate(pipeline,{options});
+	pipeline = [$stage1,$stage2 ... $stageN]
+	<options>文档声明了一些聚合操作的参数或选项
 	1、聚合表达式
 		字段路径表达式
 		$<field> - 使用$来指示字段路径 示例：$name - 指示银行账户文档中客户姓名的字段
@@ -217,7 +223,32 @@ collection查询：show collections
 		$max -		求最大值
 		$min -		求最小值
 		$multiply -	求积
-		
+
+		聚合查询示例：
+		//查询第6页(每页20条)男生的姓名、性别、年龄
+		db.users.aggregate([
+		   {$match:{gender:"男"}},
+		   {$skip:100},
+		   {$limit:20},
+		   {$project:{
+		        "姓名":'$real_name',
+		        "性别":'$gender',
+		        "年龄":'$age'
+		   }}
+		]);
+		//查询部门中女生人数少于10的部门名称和女生人数
+		db.users.aggregate([
+		    {$match:{gender:"女"}},
+		    {$group:{
+		        _id:'$department',
+		        num:{$sum:1}
+		    }},
+		    {$match:{num:{$lt:10}}},
+		    {$project:{
+		        "部门名称":'$department',
+		        "女生人数":'$num'
+		    }}
+		]);
 五、索引
 	1、索引的定义：对文档部分内容进行排序的数据结构，加快文档查询和文档排序的速度，复合键索引只能支持前缀子查询。
 		
@@ -363,7 +394,18 @@ collection查询：show collections
 
 
 
-
+MongoDB 全家桶
+    软件模块                                描述
+    mongod                              MongoDB数据库软件
+    mongo                               MongoDB命令行工具，管理MongoDB数据库
+    mongos                              MongoDB路由进程，分片环境下使用
+    mongodump/mongorestore              命令行数据库备份与恢复工具
+    mongoexport/mongoimport             CSV/JSON导入与导出，主要用于不同系统间数据迁移
+    Compass                             MongoDB GUI 管理工具
+    Ops Manager(企业版)                  MongoDB 集群管理软件
+    BI Connector(企业版)                 SQL 解释器 / BI 套接件
+    MongoDB Charts(企业版)               MongoDB 可视化软件
+    Atlas(付费及免费)                     MongoDB 云托管服务，包括永久免费云数据库
 
 
 

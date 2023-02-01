@@ -21,32 +21,26 @@ CentOS查看虚拟机IP地址
 
 ![ifconfig](https://img-blog.csdn.net/20181024171755304?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxbXpvbml3Y2Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
-切换到networks-scripts文件夹下
+注意：虚拟机可能会因为Windows宿主机防火墙原因无法ping通宿主机，最简单粗暴方式直接关闭宿主机的防火墙。其余方式请自行百度解决。
 
+##4、安装虚拟机中没有的一些命令
+###4.1 安装vim
+查看是否已安装vim命令
 ```shell script
-cd /etc/sysconfig/network-scripts
+rpm -qa |grep vim
 ```
+![](https://img-blog.csdnimg.cn/0520749e932e48e29d2b57629854f263.png#pic_left)
 
-![network-scripts](https://img-blog.csdn.net/20181024172004595?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxbXpvbml3Y2Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-
-找到对应上面的ens33配置文件,打开编辑
-
+如果缺少上图的安装包，则缺少什么就执行对应的命令例如：
 ```shell script
-vim ifcfg-ens33
+yum -y install vim-enhanced
+yum -y install vim-minimal
 ```
-![](https://img-blog.csdn.net/20181024172548814?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxbXpvbml3Y2Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-
-BOOTPROT0=static(静态IP)
-
-IPADDR (虚拟机IP地址)
-
-NETMASK (子网掩码 同主机)
-
-GATEWAY (网关地址 同主机)
-
-DNS (DNS 同主机)
-
-##4、测试
-测试ip设置是否生效 ping 主机IP
-
-![](https://img-blog.csdn.net/20181024173312713?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxbXpvbml3Y2Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+如果都没有，则全部安装
+```shell script
+yum -y install vim*
+```
+###4.2 安装wget
+```shell script
+yum -y install wget
+```

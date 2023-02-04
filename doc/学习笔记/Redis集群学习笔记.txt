@@ -1,0 +1,206 @@
+Redis 集群学习笔记
+
+Redis 有三种集群模式：
+	1、主从模式
+	2、Sentinel 模式
+	3、Cluster 模式
+三种集群模式各有特点，关于Redis介绍可以参考这里： https://blog.csdn.net/miss1181248983/article/details/82011884
+Redis 最新版本5.0.4 官网：https://redis.io/ 
+主从模式
+	主从模式是三种模式中最简单的，在主从复制中，数据库分为两类：主数据库(master)和从数据库(slave)。
+	其中主从复制有如下特点：
+		* 主数据库可以进行读写操作，当读写操作导致数据变化时会自动将数据同步给从数据库
+		* 从数据库 一 般都是只读的，并且接收主数据库同步过来的数据
+		* 一个master 可以拥有多个 slave，但是 一个slave 只能对应 一个master
+		* slave 挂了不影响其他 slave 的读和 master 的读和写，重新启动后会将数据从 master 同步过来
+		* master 挂了以后，不影响 slave 的读，但 redis 不再提供写服务，master 重启后 redis 将重新对外提供写服务
+		* master 挂了以后，不会在 slave 节点中重新选 一个master
+	工作机制：
+		* slave 启动后，主动向 master 发送SYNC命令。master 接收到SYNC命令后在后台保存快照（RDB持久化）和缓存保存
+		快照这段时间的命令，然后将保存的快照文件和缓存的命令发送给 slave 。 slave 接收到快照文件和命令后加载快照文
+		件和缓存的执行命令。复制初始化后，master 每次接收到的写命令都会同步发送给 slave，保证主从数据 一致性。
+	安全设置：master 节点设置密码后
+		1、客户端访问 master 需要密码
+		2、启动 slave 需要密码，在配置文件中配置即可
+		3、客户端访问 slave 不需要密码
+	缺点：从上面可以看出，master 节点在主从模式中唯 一 ，若 master 挂掉，则 redis 无法对外提供写服务。
+	Redis 下载安装 ： https://blog.csdn.net/weixin_43527241/article/details/88723408
+
+主从模式搭建
+	环境准备：Windows 环境 
+		一台电脑： 一 主两从绑定IP相同，用不同端口进行区分 Redis 主从节点
+		三台电脑： 一 主两从绑定IP不同，端口随意。用不同IP进行区分 Redis 主从节点
+	修改配置文件
+		master 节点配置修改：
+			bind 127.0.0.1              #监听ip，多个ip用空格分隔
+			port 6379					#实例运行端口
+			daemonize yes               #允许后台启动
+			logfile "D:/software/redis_v3.2.100/one_master_to_two_slave/redis-log/master.log"               #日志路径
+			dir D:/software/redis_v3.2.100/one_master_to_two_slave/back-file/master                 		#数据库备份文件存放目录
+			masterauth 123456           #slave连接master密码，master可省略
+			requirepass 123456          #设置master连接密码，slave可省略
+			appendonly yes              #在 dir 指定的目录生成 appdendfilename 指定文件名的文件，将每 一次 写操作请求都追加到 appendonly.master.aof 文件中
+			appendfilename "appendonly.master.aof" #指定追加写操作命令的文件
+		slave.1 节点一 配置修改：
+			bind 127.0.0.1
+			port 6380
+			daemonize yes
+			logfile "D:/software/redis_v3.2.100/one_master_to_two_slave/redis-log/slave.1.log"
+			dir D:/software/redis_v3.2.100/one_master_to_two_slave/back-file/slave-1
+			replicaof 127.0.0.1 6379
+			masterauth 123456
+			requirepass 123456
+			appendonly yes
+			appendfilename "appendonly.slave.1.aof"
+		slave.2 节点二 配置修改：
+			bind 127.0.0.1
+			port 6378
+			daemonize yes
+			logfile "D:/software/redis_v3.2.100/one_master_to_two_slave/redis-log/slave.2.log"
+			dir D:/software/redis_v3.2.100/one_master_to_two_slave/back-file/slave-2
+			replicaof 127.0.0.1 6379
+			masterauth 123456
+			requirepass 123456
+			appendonly yes
+			appendfilename "appendonly.slave.2.aof"
+
+	启动主节点 ：    redis-server redis.master.conf 
+	启动从节点 一 ： redis-server redis.slave.1.conf
+	启动从节点 二 ： redis-server redis.slave.2.conf
+	启动 Redis 客户端 redis-cle -h 127.0.0.1 -p 6379  // 启动客户端并连接主节点 -h 指定连接IP -p 指定连接端口
+	查看集群状态 ： info replication 
+		role:master
+		connected_slaves:2
+		slave0:ip=127.0.0.1,port=6380,state=online,offset=363,lag=0
+		slave1:ip=127.0.0.1,port=6378,state=online,offset=363,lag=1
+		master_repl_offset:363
+		repl_backlog_active:1
+		repl_backlog_size:1048576
+		repl_backlog_first_byte_offset:2
+		repl_backlog_histlen:362
+	查看配置 ： 
+		config get dir
+		config get dbfilename
+
+集群模式
+	关键词解释：
+		Redis daemonize 介绍
+		一、Redis daemonize 介绍
+		1、daemonize 介绍
+			A、redis.conf 配置文件中 daemonize 守护线程，默认是NO。
+			B、daemonize 是用来指定 redis 是否要用守护线程的方式启动。
+		2、daemonize 设置 yes 或者 no 区别
+			daemonize:yes:redis 采用的是单进程多线程的模式。redis.conf 中选项 daemonize 设置成 yes，代表开启守护
+			进程模式。在该模式下，redis 会在后台运行，并将进程 pid 号写入至 redis.conf 选项 pidfile 设置的文件中，
+			此时 redis 将一直运行，除非手动 kill 该进程。
+			daemonize:no: 当 daemonize 选项设置成 no，当前界面将进入 redis 的命令行界面 exit 强制退出或者关闭连
+			接工具(putty,xshell等)都会导致 redis 进程退出。
+	redis-trib.rb 工具的使用
+		1、create：创建集群
+		2、check：检查集群
+		3、info：查看集群信息
+		4、fix：修复集群
+		5、reshard：在线迁移slot
+		6、rebalance：平衡集群节点slot数量
+		7、add-node：将新节点加入集群
+		8、del-node：从集群中删除节点
+		9、set-timeout：设置集群节点间心跳连接的超时时间
+		10、call：在集群全部节点上执行命令
+		11、import：将外部redis数据导入集群
+	
+集群模式搭建
+	环境准备：Windows
+		一台电脑：三主三从，六个节点分别用不同的端口区分即可。
+		三台电脑：每台电脑上一个主节点，一个从节点。主节点和它所对应的从节点不在一台电脑上即可，主要用来防止主节点所在
+				 电脑因主节点宕机连带着对应从节点也挂掉，最终导致整个集群无法正常工作。
+	修改配置文件： // 修改六个节点的配置，使用 redis-trib.rb 集群管理工具进行集群创建、节点添加删除等管理操作
+		node-1：
+			port 6371
+			bind 127.0.0.1
+			daemonize no
+			pidfile D:\software\redis_v3.2.100\cluster-3_master_3_slave\nodes\master-1\snapshot_backup_file\6371.pid
+			logfile "D:/software/redis_v3.2.100/cluster-3_master_3_slave/nodes/master-1/log_file/master-1.log"
+			dir ./snapshot_backup_file
+			cluster-enabled yes
+			cluster-config-file master-1.conf
+			cluster-node-timeout 10100
+			appendonly yes
+			appendfilename "appendonly.master.1.aof"
+		node-2：
+			port 6373
+			bind 127.0.0.1
+			daemonize no
+			pidfile D:\software\redis_v3.2.100\cluster-3_master_3_slave\nodes\master-2\snapshot_backup_file\6373.pid
+			logfile "D:/software/redis_v3.2.100/cluster-3_master_3_slave/nodes/master-2/log_file/master-2.log"
+			dir ./snapshot_backup_file
+			cluster-enabled yes
+			cluster-config-file master-2.conf
+			cluster-node-timeout 10100
+			appendonly yes
+			appendfilename "appendonly.master.2.aof"
+		node-3：
+			port 6375
+			bind 127.0.0.1
+			daemonize no
+			pidfile D:\software\redis_v3.2.100\cluster-3_master_3_slave\nodes\master-3\snapshot_backup_file\6375.pid
+			logfile "D:/software/redis_v3.2.100/cluster-3_master_3_slave/nodes/master-3/log_file/master-3.log"
+			dir ./snapshot_backup_file
+			cluster-enabled yes
+			cluster-config-file master-3.conf
+			cluster-node-timeout 10100
+			appendonly yes
+			appendfilename "appendonly.master.3.aof"
+		node-4:
+			port 6372
+			bind 127.0.0.1
+			daemonize no
+			pidfile D:\software\redis_v3.2.100\cluster-3_master_3_slave\nodes\slave-1\snapshot_backup_file\6372.pid
+			logfile "D:/software/redis_v3.2.100/cluster-3_master_3_slave/nodes/slave-1/log_file/slave-1.log"
+			dir ./snapshot_backup_file
+			cluster-enabled yes
+			cluster-config-file slave-1.conf
+			cluster-node-timeout 10100
+			appendonly yes
+			appendfilename "appendonly.slave.1.aof"
+		node-5:
+			port 6374
+			bind 127.0.0.1
+			daemonize no
+			pidfile D:\software\redis_v3.2.100\cluster-3_master_3_slave\nodes\slave-2\snapshot_backup_file\6374.pid
+			logfile "D:/software/redis_v3.2.100/cluster-3_master_3_slave/nodes/slave-2/log_file/slave-2.log"
+			dir ./snapshot_backup_file
+			cluster-enabled yes
+			cluster-config-file slave-2.conf
+			cluster-node-timeout 10100
+			appendonly yes
+			appendfilename "appendonly.slave.2.aof"
+		node-6:
+			port 6376
+			bind 127.0.0.1
+			daemonize no
+			pidfile D:\software\redis_v3.2.100\cluster-3_master_3_slave\nodes\slave-3\snapshot_backup_file\6376.pid
+			logfile "D:/software/redis_v3.2.100/cluster-3_master_3_slave/nodes/slave-3/log_file/slave-3.log"
+			dir ./snapshot_backup_file
+			cluster-enabled yes
+			cluster-config-file slave-3.conf
+			cluster-node-timeout 10100
+			appendonly yes
+			appendfilename "appendonly.slave.3.aof"
+	下载并安装 Ruby // 集群操作工具运行环境
+		下载地址：http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.4-x64.exe
+		下载后建议安装（双击运行）到C盘。
+		记得勾选以下三个选项(配置环境变量，关联 .rb .rbw 类型文件)：
+			1、Install Td / Tk support 
+			2、Add Ruby executables to your PATH
+			3、Assorcite .rb and .rbw with this Ruby installation
+	下载 Ruby 环境下 Redis 驱动 
+		下载地址：https://rubygems.org/gems/redis/versions/3.2.2
+		下载后放在 Ruby 安装目录下
+	安装该驱动，命令如下： // 格式 ： gem install 【gem驱动文件路径（相对路径也行）】
+		gem install --local C:\Ruby22\redis-3.2.2.gem 
+	启动六个节点。
+	打开黑窗口，切换到 redis-trib.rb 工具所在目录下，使用 create 命令：
+		replicas 参数指明每一个master都有一个slave，没有该参数时则所有节点都是主节点
+		redis-trib.rb create --replicas 1 127.0.0.1:6371 127.0.0.1:6372 127.0.0.1:6373 127.0.0.1:6374 127.0.0.1:6375 127.0.0.1:6376
+		或者
+		redis-trib.rb create              127.0.0.1:6371 127.0.0.1:6372 127.0.0.1:6373 127.0.0.1:6374 127.0.0.1:6375 127.0.0.1:6376

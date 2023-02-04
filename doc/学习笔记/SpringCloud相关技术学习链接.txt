@@ -1,0 +1,26 @@
+	1 SpringCloud相关组件: https://www.cnblogs.com/rmxd/p/12545904.html
+
+	2.1 Redis应用场景 https://blog.csdn.net/Bobdragery/article/details/99711762
+	2.2 SpringBoot整合 redis https://www.cnblogs.com/superfj/p/9232482.html
+	
+	3.1RabbitMQ详解 https://www.cnblogs.com/ityouknow/p/6120544.html
+	3.2RabbitMQ 安装 https://www.cnblogs.com/saryli/p/9729591.html  
+	3.3RabbitMQ 整合 SpringBoot  https://www.cnblogs.com/linyufeng/p/9885645.html
+	3.4Binding与BindingBuilder 源码解读 https://blog.csdn.net/xiazaizhuanyong1231/article/details/80655266
+	3.5[MQ]RabbitMQ的概要介绍及消息路由规则 https://blog.csdn.net/debug_fan/article/details/105088145
+	3.6MQ中间件-rabbitmq-生产者如何确保消息的不丢失（SpringBoot2.0版本）生产者不丢数据、MQ服务器不丢数据：https://www.jianshu.com/p/4aa95905aad3
+	3.7MQ中间件-rabbitmq-消费者消息获取--推模式+拉模式 https://www.jianshu.com/p/6e4b1a4df78c
+	3.8中间件 推 拉 消费者 https://www.jianshu.com/p/6e4b1a4df78c
+	3.9MQ中间件-rabbitmq-消费者消息获取及异常处理的实现（SpringBoot2.0环境下） https://www.jianshu.com/p/090ed51006d5
+	3.10MQ消息中间件RabbitMQ 入门到进阶+(牧码人/老王/)+(架构师系列) https://www.bilibili.com/video/BV1gW411H7Az?p=12
+	
+	4.1Elasticsearch的功能、使用场景以及特点 https://www.jianshu.com/p/ed80664141a5 
+	4.2Elasticsearch文档API https://www.yiibai.com/elasticsearch/elasticsearch_document_apis.html
+	4.3ElasticSearchRepository和ElasticSearchTemplate的使用 https://blog.csdn.net/tianyaleixiaowu/article/details/76149547/
+	4.4使用Java High Level REST Client操作elasticsearch https://www.cnblogs.com/ginb/p/8716485.html 
+	4.5linux Centos7 安裝搭建elasticsearch7.6.2+kibana7.6.2+中文分词7.6.2详解  https://blog.csdn.net/CaptainJava/article/details/105643068
+
+	
+	5.1MongoDB简介、特点、原理、使用场景、应用案例 https://www.cnblogs.com/kungfupanda/p/12556569.html
+	5.2Spring Boot 中 MongoDB 的使用 https://www.cnblogs.com/williamjie/p/11193175.html
+	5.3MongoDB 应用场景、避坑事项与最佳实践 https://blog.csdn.net/jjwen/article/details/79786444

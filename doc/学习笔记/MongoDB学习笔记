@@ -1,0 +1,36 @@
+MongoDB学习笔记
+
+添加一个字段.  url 代表表名 , 添加字段 content。 字符串类型。
+db.url.update({}, {$set: {content:""}}, {multi: 1})。
+删除mongo表中字段
+db.collection.update({},{$unset:{"需要删除的字段":""}},false,true)
+
+
+db.message_record.update(
+	{"messageSendType":"1"}, 			//查询器
+    {$set:{"delFlag":NumberInt(0)}}, 	//修改器
+    { multi: true, upsert: false}		//...暂时不知道
+)
+
+删除列表中所有数据 
+db.[collectionName].remove({}) 
+根据条件删除数据
+db.[collectionName].remove({key:value})
+MongoDB插入文档
+db.[collectionName].insert({})
+
+批量更新某个字段
+db.getCollection('bond_sentiment_news').find({"source" : 2,"siteUrl" : "http://www.21jingji.com/"}).forEach(
+   function(item){                
+       db.getCollection('bond_sentiment_news').update({"_id":item._id},{$set:{"siteName":"21经济网"}})
+   }
+)
+
+db.getCollection('my_booking').find({"hospitalName":/xx医院/,openId:/^2/}).forEach(
+   function(item){                
+       db.getCollection('my_booking').update({"_id":item._id},{$set:{"payType": "1"}})
+   }
+)
+
+
+数据迁移参考：https://blog.csdn.net/CaoMei_HuaCha/article/details/89407012

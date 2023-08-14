@@ -29,10 +29,10 @@
 ## 技术栈
 - 后端框架(熟练应用) Struts2、 Spring 、SpringMVC 、SpringBoot 、SpringCloud 、Shiro、Mybatis 、Mybatis Plus、Hibernate
 - 消息中间件(熟练应用) RocketMQ、RabbitMq、ActiveMq
-- 搜索引擎(熟悉) ElasticSearch 、Solr
+- 搜索引擎(熟练应用) ElasticSearch 、Solr
 - 缓存中间件(熟练应用)  Redis
 - 分布式任务调度(熟练应用) XXL-JOB
-- 分布式服务注册/配置中心(熟练应用) Nacos
+- 分布式服务注册/配置中心(熟练应用) Nacos、Apollo
 - 关系型数据库(熟练应用) MYSQL、ORACLE、达梦数据库（国产）、神通数据库（国产）
 - NoSQL数据库(熟练应用) MongoDB
 - RPC中间件(熟练应用) Dubbo

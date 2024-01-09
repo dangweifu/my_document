@@ -1,0 +1,91 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:创建SpringApplication;
+:读取并解析 META-INF/spring.factories 配置文件;
+:并将解析后的信息放入cache;
+note right
+cache的数据结构是Map<ClassLoader, MultiValueMap<String, String>>
+end note
+:创建应用上下文初始化器实例;
+note right
+从 cache 中获取 ApplicationContextInitializer 相关的beanNames，以反射的形式创建实例对象
+end note
+:设置初始化器实例至 SpringApplication;
+:创建应用监听器实例;
+note right
+从 cache 配置文件中获取 ApplicationListener 相关的beanNames，以反射的形式创建实例对象
+end note
+:设置应用监听器实例至 SpringApplication;
+:从栈帧中识别main方法，并找到启动类，将它设置到 SpringApplication 中;
+:创建Spring运行监听器实例;
+note right
+从 cache 配置文件中获取 SpringApplicationRunListener 相关的beanNames，以反射的形式创建实例对象
+end note
+:Spring运行监听器 starting();
+:创建应用参数实例;
+:准备系统环境;
+note right
+加载系统环境信息
+1、操作新系统信息
+2、用户信息
+3、应用信息
+4、active配置信息
+。。。
+简而言之就是准备系统环境
+end note
+:控制台输出banner信息;
+:createApplicationContext;
+':创建SpringBoot异常报告器实例;
+'note right
+'从 cache 配置文件中获取 SpringBootExceptionReporter 相关的beanNames，以反射的形式创建实例对象
+'end note
+:prepareContext;
+note right
+一、设置各种处理器至上下文对象中，其中包括：
+1、环境对象
+2、各种初始化器
+3、各种监听器
+4、应用参数
+。。。
+二、监听器：发布上下文初始化事件 ApplicationContextInitializedEvent
+三、创建bean定义加载器
+四、标记并加载启动类
+五、监听器：发布上下文准备事件 ApplicationPreparedEvent
+end note
+:refreshContext;
+note right
+'Prepare this context for refreshing.
+prepareRefresh
+'Tell the subclass to refresh the internal bean factory.
+ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory()
+'Prepare the bean factory for use in this context.
+prepareBeanFactory(beanFactory)
+'Allows post-processing of the bean factory in context subclasses.
+postProcessBeanFactory(beanFactory);
+'Invoke factory processors registered as beans in the context.
+invokeBeanFactoryPostProcessors(beanFactory);
+'Register bean processors that intercept bean creation.
+registerBeanPostProcessors(beanFactory);
+'Initialize message source for this context.
+initMessageSource();
+'Initialize event multicaster for this context.
+initApplicationEventMulticaster();
+'Initialize other special beans in specific context subclasses.
+onRefresh();
+'Check for listener beans and register them.
+registerListeners();
+'Instantiate all remaining (non-lazy-init) singletons.
+finishBeanFactoryInitialization(beanFactory);
+'Last step: publish corresponding event.
+finishRefresh();
+'Reset common introspection caches in Spring's core, since we might not ever need metadata for singleton beans anymore...
+resetCommonCaches();
+end note
+:afterRefresh;
+:Spring运行监听器 started(context);
+:callRunners(context, applicationArguments);
+stop
+
+@enduml

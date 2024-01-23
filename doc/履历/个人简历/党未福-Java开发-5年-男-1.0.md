@@ -40,6 +40,7 @@
 熟练使用 Spring、Mybatis、SpringBoot等开源框架，熟悉Spring的IOC、DI、AOP设计思想和自动装配
 熟练使用 Docker，能够使用Harbor搭建私有Docker镜像仓库，编写DockerFile打包生成Docker镜像并上传，了解Docker Compose
 熟练使用 Linux常用命令、项目部署、熟悉docker、能够使用Docker搭建Maven私服、GitLab私服等
+熟悉 Nginx，配置反向代理，实现七层Http和四层tcp负载均衡、故障转移
 熟悉 JavaScript、JQuery、HTML+CSS、Ajax、Servlet、Jsp等Web客户端技术
 熟悉 JVM常用调优参数及其作用、常用监控工具；能够通过多种方式导出JVM堆快照，并使用MAT分析快照文件定位解决线上问题
 熟悉 MySQL主从复制原理、读写分离、分库分表（Mycat），ShardingJdbc、MySQL索引、SQL优化
@@ -49,16 +50,18 @@
 了解 第三方支付接口、微信公众号对接流程
 了解 SpringCloud常用组件注册中心（Eureka|Nacos）、负载均衡器（Ribbon）、服务保护（Hystrix）、网关（Zuul）、
     分布式配置中心（Nacos、Apollo）、链路追踪（Zipkin）、消息总线（Bus）
+熟知分布式常见问题及解决方案，如分布式任务调度（？）、服务追踪与调用链路（？）、分布式Session一致性（？）、
+分布式事务（Seata）、分布式锁（？）、分布式日志收集（ELK）、分布式生成全局ID（雪花算法）
 ```
 [//]: # (网络通信协议？)
 [//]: # (通信方式？)
 [//]: # (数据格式？)
-[//]: # (熟悉Nginx，配置反向代理)
-[//]: # (？实现七层Http和四层tcp负载均衡、故障转移、rewrite重写机制)
+[//]: # ()
+[//]: # (？、rewrite重写机制)
 [//]: # (？Consul+upsvnc+Nginx实现动态配置负载均衡)
 [//]: # (？了解lvs+keepalived+nginx实现高可用负载集群)
-[//]: # (熟知分布式常见问题及解决方案，如分布式任务调度（？）、服务追踪与调用链路（？）、分布式Session一致性（？）、)
-[//]: # (分布式事务（Seata）、分布式锁（？）、分布式日志收集（ELK）、分布式生成全局ID（雪花算法）)
+[//]: # ()
+[//]: # ()
 
 ## 项目
 ### 项目名称：7kid平台
@@ -108,3 +111,6 @@
 - 大表查询性能过低问题
   - 优化思路：代码优化->结构优化(表结构、实现结构)->业务优化
   - 分表优化处理
+### 经验与教训
+- ThreadLocal 内存泄漏
+- Zip压缩流未关闭 内存泄漏

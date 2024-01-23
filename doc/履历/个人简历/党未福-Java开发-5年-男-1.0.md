@@ -64,7 +64,7 @@
 [//]: # ()
 
 ## 项目
-### 项目名称：7kid平台
+### 项目一：7kid平台
 ### 项目时间：2020年12月~至今
 ### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
 ### 项目简介：
@@ -114,3 +114,35 @@
 ### 经验与教训
 - ThreadLocal 内存泄漏
 - Zip压缩流未关闭 内存泄漏
+
+### 项目二：
+### 项目时间：
+### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
+### 项目简介：
+### 主要职责：
+### 项目遇到的问题及其解决方案：
+### 经验与教训：
+
+### 项目三：
+### 项目时间：
+### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
+### 项目简介：
+### 主要职责：
+### 项目遇到的问题及其解决方案：
+### 经验与教训：
+
+### 项目四：
+### 项目时间：
+### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
+### 项目简介：
+### 主要职责：
+### 项目遇到的问题及其解决方案：
+### 经验与教训：
+
+### 项目五：
+### 项目时间：
+### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
+### 项目简介：
+### 主要职责：
+### 项目遇到的问题及其解决方案：
+### 经验与教训：

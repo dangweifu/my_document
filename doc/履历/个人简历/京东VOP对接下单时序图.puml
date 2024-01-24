@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title 京东VOP对接下单时序图
+autonumber
+
+actor user
+participant 隆道商城
+participant 京东VOP
+
+user -> 隆道商城 : 下单
+隆道商城 -> 京东VOP : 校验（价格、库存等）
+京东VOP --> 隆道商城 : 通过
+隆道商城 -> 京东VOP : 下订单
+京东VOP --> 隆道商城 : 下单成功，返回JD订单ID
+隆道商城 -> 隆道商城 : 生成订单信息，绑定JD订单ID
+隆道商城 --> user : 下单成功
+
+@enduml

@@ -199,3 +199,16 @@ Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、
 - 抗压力强。高强度工作压力下仍能够保质保量完成工作。
 - 团队协作力强。团队开发过程中，各个岗位的人员需要互相协作取彼之长补己之短，集大家之所长尽善尽美完成工作。
 
+## 项目相关链接
+- 企业官网
+  - 北京雷铭智信科技有限公司：http://www.leimingtech.com/index.shtml
+  - 杭州阿优文化科技有限公司：https://www.66uu.cn/about/introduction
+- 项目链接
+  - 7kid平台：可以直接去应用市场下载 7Kid教师端APP、7Kid家长端APP
+  - 隆道商城：https://sc.longdaoyun.com/
+  - 全军武器装备采购信息网：http://www.weain.mil.cn/
+  - 国家军民融合公共服务平台：http://www.leimingtech.com/caseAll/newsMedia/0b0123bb6b64df0b016b6a1a8d81012c.shtml
+  - CMS内容管理系统：http://www.leimingtech.com/CMSSolve/list.shtml
+  - 中国医学教育题库：https://tk.ipmph.com/exam/a/adminlogin
+
+

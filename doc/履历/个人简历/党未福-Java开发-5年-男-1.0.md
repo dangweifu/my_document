@@ -28,10 +28,8 @@
 
 ## 技术栈
 
-[//]: # (【熟悉程度（了解、熟悉、掌握、精通）】【技术点（关键字）】【技术核心点（能干嘛）】【解决的问题（干了啥）】)
 ```text
-熟练掌握 JavaEE基础知识，掌握多线程、线程池、锁与并发编程、常用设计模式（工厂、代理、单例、策略、责任链等）、反射、自定义注解、泛型等的使用
-熟练掌握 JVM内存模型、类加载机制、垃圾回收
+熟练掌握 JavaEE基础知识，掌握多线程、线程池、锁与并发编程、常用设计模式（工厂、代理、单例、策略、责任链等）、反射、自定义注解、泛型等的使用、JVM内存模型、类加载机制、垃圾回收
 熟练掌握 TCP、UDP、HTTP以及HTTPS通信协议及其原理
 熟练使用 MySQL、Oracle等关系型数据库，熟练使用Redis、MongoDB、ElasticSearch等非关系型数据库
 熟练使用 RPC框架Dubbo，了解Dubbo支持的数据通信协议，了解gRPC
@@ -39,6 +37,7 @@
 熟练使用 Spring、Mybatis、SpringBoot等开源框架，熟悉Spring的IOC、DI、AOP设计思想和自动装配
 熟练使用 Docker，能够使用Harbor搭建私有Docker镜像仓库，编写DockerFile打包生成Docker镜像并上传，了解Docker Compose
 熟练使用 Linux常用命令、项目部署、熟悉docker、能够使用Docker搭建Maven私服、GitLab私服等
+熟知 分布式常见问题及解决方案，如分布式任务调度、服务追踪与调用链路、分布式Session一致性、分布式事务（Seata）、分布式锁、分布式日志收集（ELK）、分布式生成全局ID（雪花算法）
 熟悉 Nginx，配置反向代理，实现七层Http和四层tcp负载均衡、故障转移，了解lvs+keepalived+nginx实现高可用负载集群
 熟悉 JavaScript、JQuery、HTML+CSS、Ajax、Servlet、Jsp等Web客户端技术
 熟悉 JVM常用调优参数及其作用、常用监控工具；能够通过多种方式导出JVM堆快照，并使用MAT分析快照文件定位解决线上问题
@@ -49,15 +48,13 @@
 了解 第三方支付接口、微信公众号对接流程
 了解 SpringCloud常用组件注册中心（Eureka|Nacos）、负载均衡器（Ribbon）、服务保护（Hystrix）、网关（Zuul）、
     分布式配置中心（Nacos、Apollo）、链路追踪（Zipkin）、消息总线（Bus）
-熟知分布式常见问题及解决方案，如分布式任务调度、服务追踪与调用链路、分布式Session一致性、
-分布式事务（Seata）、分布式锁、分布式日志收集（ELK）、分布式生成全局ID（雪花算法）
 ```
 
-## 项目
-### 项目一：7kid平台
+## 项目经历
+### 项目一：7kid平台(2020年12月~至今)
 #### 所属企业：[杭州阿优文化科技有限公司](https://www.66uu.cn/about/introduction)
-#### 项目时间：2020年12月~至今
-#### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
+#### 项目使用技术：
+Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
 #### 项目简介：
 本项目是为幼儿园提供的幼教与家校互动平台，客户端主要有园所后台、7kid教师端APP、7kid家长端APP、运营后台。
 业务模块主要有以下18个，其中我独立全权负责的模块有5个（园务中心、保健中心、家园共育中心、访客中心、巡检中心）：
@@ -66,18 +63,12 @@
   - 教职工的入职、角色岗位分配、日常操作、账号禁用、离职、调岗等管理
   - 幼儿的入园、离园、毕业、调班等一系列的管理
 
-[//]: # (  - ![]&#40;./资源/年级班级流程图.png&#41;)
-
-[//]: # (  - ![]&#40;./资源/教职工管理流程图.png&#41;)
-
-[//]: # (  - ![]&#40;./资源/幼儿管理流程图.png&#41;)
 - 保育保健中心，主要包括以下几点：
   - 幼儿过敏源、既往史以及各种已知疾病的预防，幼儿日配餐食谱管理等
   - 幼儿身心健康的检查、记录，以国际幼儿健康发育标志作为评判依据对幼儿做一系列的健康评估，以评估结果作为依据对幼儿提出相应的医疗、教育、培养等可行性方案并与家长告知、商榷共同打造优良的教培环境
   -  ![](./资源/健康体测业务流程图.png)
   - 记录、统计幼儿的健康情况，从多个维度测评幼儿发育情况并生成对应的统计报表
 
-[//]: # (  - ![]&#40;./资源/食谱配餐流程图1.png&#41;)
 - 家园共育中心，主要包括以下几点：
   - 班级圈模块是为老师、家长、幼儿互动交流分享生活细节提供的一个在线解决方案 ，幼儿、家长、教师可以在APP端分享家校生活，类似于微信朋友圈一样
   - 亲子活动模块是为老师家长互动教学提供的一个在线解决方案，能够让老师可以在线安排班级活动，指定参与班级，是否需要家长配合提交活动内容。
@@ -110,10 +101,10 @@
 - ThreadLocal 内存泄漏
 - Zip压缩流未关闭 内存泄漏
 
-### 项目二：[隆道商城](https://sc.longdaoyun.com/)
+### 项目二：[隆道商城(2020年6月至2020年11月)](https://sc.longdaoyun.com/)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
-#### 项目时间：2020年6月至2020年11月
-#### 项目使用技术：Apollo、SpringCloud全家桶、Springboot、Mybatis-plus、Seata、Redis、MySQL、ActiveMQ、Docker、Nginx、Vue、k8s、ElasticSearch
+#### 项目使用技术：
+Apollo、SpringCloud全家桶、Springboot、Mybatis-plus、Seata、Redis、MySQL、ActiveMQ、Docker、Nginx、Vue、k8s、ElasticSearch
 #### 项目简介：
 本项目是基于京东VOP的ToC和ToB的电商购物平台，核心服务模块有用户、商品、订单、购物车、售后、账期（面向企业）、专属商城（面向企业）。
 京东VOP是京东对外的一个面向企业的商城对接解决方案，能够让企业通过VOP对接以租户的形式加入京东平台完成商品信息同步、售卖，类似于构建线下连锁加盟商的一个开放平台。
@@ -138,10 +129,10 @@
   - 服务层优化：及时补货、超卖售后及时沟通与跟进，提供优惠券、退款等售后服务
 
 
-### 项目三：[全军武器装备采购信息网](http://www.weain.mil.cn/)
+### 项目三：[全军武器装备采购信息网(2019年8月至2020年6月)](http://www.weain.mil.cn/)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
-#### 项目时间：2019年8月至2020年6月
-#### 项目使用技术：Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录
+#### 项目使用技术：
+Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录
 #### 项目简介：
 全军武器装备采购信息网用户分为访客、注册用户和认证用户。其中，访客仅能浏览网站信息，注册用户可进行加入关注和咨询建议等操作，
 认证用户配发互联网U盾后，可进行需求对接、产品技术自荐、参与招标、投诉质疑等操作。 网站开设有装备采购需求、政策法规、民参军
@@ -158,10 +149,10 @@
 - 对网络知识了解不够，调试困难重重
 - 内网环境开发，要求严格，军事化环境，所有随身携带的设备都必须报备，U盘等设备绝对不允许接入内网，否则以违反军律严肃处理
 
-### 项目四：[国家军民融合公共服务平台](http://www.leimingtech.com/caseAll/newsMedia/0b0123bb6b64df0b016b6a1a8d81012c.shtml)
+### 项目四：[国家军民融合公共服务平台(2018年12月~2019年8月)](http://www.leimingtech.com/caseAll/newsMedia/0b0123bb6b64df0b016b6a1a8d81012c.shtml)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
-#### 项目时间：2018年12月~2019年8月（目前已下线）
-#### 项目使用技术：Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录+Solr
+#### 项目使用技术：
+Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录+Solr
 #### 项目简介：
 国家军民融合公共平台是工业和信息化部、财政部于2012年皮批复、2014年建成的国家级的权威政府公共服务平台，主要是打造国务院有关
 部委、军队、军工单位和民口企业沟通交流的桥梁和纽带，为深入推进国家军民融合发展，提供更为丰富、便捷的信息服务。网站设有通知公
@@ -172,10 +163,10 @@
 - 要求登录的验证码能够在后台设定字符取值、调整背景模糊度等
 - 解决方案：引入市面常用的验证码生成包，并扩展其相关接口，增加自定义字符取值功能、背景模糊度调整功能。
 
-### 项目五：[CMS内容管理系统](http://www.leimingtech.com/CMSSolve/list.shtml)
+### 项目五：[CMS内容管理系统(2018年8月~2018年11月)](http://www.leimingtech.com/CMSSolve/list.shtml)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
-#### 项目时间：2018年8月~2018年11月
-#### 项目使用技术：Spring+SpringMVC+Hibernate+Freemarker+Mysql+Solr+Redis+Shiro
+#### 项目使用技术：
+Spring+SpringMVC+Hibernate+Freemarker+Mysql+Solr+Redis+Shiro
 #### 项目简介：
 本项目是一个集热度、深度、多场景零距离互动于一体的自媒体内容管理系统，主要是在以专业媒体机构为中心传播，
 受众对信息是被动接受模式的传媒环境下，给用户提供一种高热度、强交互以内容聚焦为导向的新媒体生态系统。核心
@@ -188,11 +179,11 @@
 - 负责内容管理业务功能开发，其中包括对文章、视频、图片的管理（增删改查导入导出等）
 - 负责基于FreeMarker技术的静态页面的生成功能开发
 
-### 项目六：[中国医学教育题库](https://tk.ipmph.com/exam/a/adminlogin)
+### 项目六：[中国医学教育题库(2018年6月~2018年7)](https://tk.ipmph.com/exam/a/adminlogin)
 #### 开发企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
 #### 归属单位：[人民卫生电子音像出版社](https://www.pmph.com/main)
-#### 项目时间：2018年6月~2018年7
-#### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
+#### 项目使用技术：
+Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
 #### 项目简介：
 主要服务于线上医学类考试，主要业务流程为管理员录入考试题目到题库，配置各类、各科
 考试模板（多选、单选、简答等）；包含哪些学科考试内容（内科、外科、泌尿科等等）
@@ -201,3 +192,10 @@
 #### 主要职责：
 - 业务bug修复
 - 错乱数据维护
+## 个人简介
+对待工作的优势：
+- 责任心强。对自己的工作认真负责，要求尽可能的高质量高效率完成。
+- 执行力强。对领导安排的事务无论大小，只要公司需要都会去认真完成。
+- 抗压力强。高强度工作压力下仍能够保质保量完成工作。
+- 团队协作力强。团队开发过程中，各个岗位的人员需要互相协作取彼之长补己之短，集大家之所长尽善尽美完成工作。
+

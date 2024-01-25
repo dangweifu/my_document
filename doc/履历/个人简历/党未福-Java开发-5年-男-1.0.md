@@ -30,17 +30,16 @@
 
 [//]: # (【熟悉程度（了解、熟悉、掌握、精通）】【技术点（关键字）】【技术核心点（能干嘛）】【解决的问题（干了啥）】)
 ```text
-熟练掌握 JavaEE基础知识，掌握多线程、线程池、锁与并发编程、常用设计模式（工厂、代理、单例、策略、责任链等）、
-        反射、自定义注解、泛型等的使用
+熟练掌握 JavaEE基础知识，掌握多线程、线程池、锁与并发编程、常用设计模式（工厂、代理、单例、策略、责任链等）、反射、自定义注解、泛型等的使用
 熟练掌握 JVM内存模型、类加载机制、垃圾回收
 熟练掌握 TCP、UDP、HTTP以及HTTPS通信协议及其原理
 熟练使用 MySQL、Oracle等关系型数据库，熟练使用Redis、MongoDB、ElasticSearch等非关系型数据库
-熟练使用 RPC框架Dubbo
+熟练使用 RPC框架Dubbo，了解Dubbo支持的数据通信协议，了解gRPC
 熟练使用 RocketMQ，降低服务耦合实现分布式事务的最终一致性，了解RabbitMQ、ActiveMQ、Kafka
 熟练使用 Spring、Mybatis、SpringBoot等开源框架，熟悉Spring的IOC、DI、AOP设计思想和自动装配
 熟练使用 Docker，能够使用Harbor搭建私有Docker镜像仓库，编写DockerFile打包生成Docker镜像并上传，了解Docker Compose
 熟练使用 Linux常用命令、项目部署、熟悉docker、能够使用Docker搭建Maven私服、GitLab私服等
-熟悉 Nginx，配置反向代理，实现七层Http和四层tcp负载均衡、故障转移
+熟悉 Nginx，配置反向代理，实现七层Http和四层tcp负载均衡、故障转移，了解lvs+keepalived+nginx实现高可用负载集群
 熟悉 JavaScript、JQuery、HTML+CSS、Ajax、Servlet、Jsp等Web客户端技术
 熟悉 JVM常用调优参数及其作用、常用监控工具；能够通过多种方式导出JVM堆快照，并使用MAT分析快照文件定位解决线上问题
 熟悉 MySQL主从复制原理、读写分离、分库分表（Mycat），ShardingJdbc、MySQL索引、SQL优化
@@ -50,18 +49,9 @@
 了解 第三方支付接口、微信公众号对接流程
 了解 SpringCloud常用组件注册中心（Eureka|Nacos）、负载均衡器（Ribbon）、服务保护（Hystrix）、网关（Zuul）、
     分布式配置中心（Nacos、Apollo）、链路追踪（Zipkin）、消息总线（Bus）
-熟知分布式常见问题及解决方案，如分布式任务调度（？）、服务追踪与调用链路（？）、分布式Session一致性（？）、
-分布式事务（Seata）、分布式锁（？）、分布式日志收集（ELK）、分布式生成全局ID（雪花算法）
+熟知分布式常见问题及解决方案，如分布式任务调度、服务追踪与调用链路、分布式Session一致性、
+分布式事务（Seata）、分布式锁、分布式日志收集（ELK）、分布式生成全局ID（雪花算法）
 ```
-[//]: # (网络通信协议？)
-[//]: # (通信方式？)
-[//]: # (数据格式？)
-[//]: # ()
-[//]: # (？、rewrite重写机制)
-[//]: # (？Consul+upsvnc+Nginx实现动态配置负载均衡)
-[//]: # (？了解lvs+keepalived+nginx实现高可用负载集群)
-[//]: # ()
-[//]: # ()
 
 ## 项目
 ### 项目一：7kid平台
@@ -181,27 +171,33 @@
 #### 项目遇到的问题及其解决方案：
 - 要求登录的验证码能够在后台设定字符取值、调整背景模糊度等
 - 解决方案：引入市面常用的验证码生成包，并扩展其相关接口，增加自定义字符取值功能、背景模糊度调整功能。
-#### 经验与教训：
-
 
 ### 项目五：[CMS内容管理系统](http://www.leimingtech.com/CMSSolve/list.shtml)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
 #### 项目时间：2018年8月~2018年11月
-#### 项目使用技术：RESTful Spring+SpringMVC+Hibernate+Freemarker+Mysql
+#### 项目使用技术：Spring+SpringMVC+Hibernate+Freemarker+Mysql+Solr+Redis+Shiro
 #### 项目简介：
-本项目是一个内容管理系统，主要是对文章、视频、图片、站点链接、广告等信息做录入、审核、上架、发布、撤销、生成静态页、站
-点发布等管理操作。 系统由后台录入内容信息，经发布后通过Freemarker生成静态页，再通过Nginx做路由切换控制站点资源访问。
+本项目是一个集热度、深度、多场景零距离互动于一体的自媒体内容管理系统，主要是在以专业媒体机构为中心传播，
+受众对信息是被动接受模式的传媒环境下，给用户提供一种高热度、强交互以内容聚焦为导向的新媒体生态系统。核心
+业务功能模块有用户、审核、内容、标签、评论等，基础服务有日志、搜索、通知、权限、认证、消息、邮件、缓存等。
+主要是对文章、视频、图片、站点链接、广告等信息做录入、审核、上架、发布、撤销、生成静态页、站点发布等管理操
+作。系统由后台录入内容信息，经发布后通过Freemarker生成静态页，再通过Nginx做路由切换控制站点资源访问。
 主要核心业务逻辑如下图所示：
 ![CMS](./资源/CMS.png)
 #### 主要职责：
 - 负责内容管理业务功能开发，其中包括对文章、视频、图片的管理（增删改查导入导出等）
 - 负责基于FreeMarker技术的静态页面的生成功能开发
 
-### 项目六：[医学教育题库管理系统]()
-#### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
+### 项目六：[中国医学教育题库](https://tk.ipmph.com/exam/a/adminlogin)
+#### 开发企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
+#### 归属单位：[人民卫生电子音像出版社](https://www.pmph.com/main)
 #### 项目时间：2018年6月~2018年7
 #### 项目使用技术：Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
 #### 项目简介：
+主要服务于线上医学类考试，主要业务流程为管理员录入考试题目到题库，配置各类、各科
+考试模板（多选、单选、简答等）；包含哪些学科考试内容（内科、外科、泌尿科等等）
+生成考卷供线上考试使用。线上考试主要包含功能有监考（屏幕锁定、外网屏蔽、答题、
+修改、提交、暂停考试等等）
 #### 主要职责：
-#### 项目遇到的问题及其解决方案：
-#### 经验与教训：
+- 业务bug修复
+- 错乱数据维护

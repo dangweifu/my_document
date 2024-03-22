@@ -7,7 +7,7 @@
     <td>姓名</td>
     <td>党未福</td>
     <td>工作年限</td>
-    <td>5年</td></tr>
+    <td>6年</td></tr>
 <tr>
     <td>教育经历</td>
     <td>荆楚理工学院(2013.9~2017.7)</td>
@@ -220,5 +220,4 @@ Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、
   - 国家军民融合公共服务平台：http://www.leimingtech.com/caseAll/newsMedia/0b0123bb6b64df0b016b6a1a8d81012c.shtml
   - CMS内容管理系统：http://www.leimingtech.com/CMSSolve/list.shtml
   - 中国医学教育题库：https://tk.ipmph.com/exam/a/adminlogin
-
 

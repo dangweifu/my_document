@@ -26,6 +26,27 @@
     <td>男</td></tr>
 </table>
 
+## 工作经历
+<table align="center" style="word-break: keep-all;word-wrap:break-word;">
+<tr>
+    <td>公司名称</td>
+    <td>在职起止日期</td>
+    <td>职位</td>
+<tr>
+    <td>北京雷铭置信科技</td>
+    <td>2018-6~2020-11</td>
+    <td>Java开发</td>
+<tr>
+    <td>杭州阿优文化科技</td>
+    <td>2020-12~2024-2</td>
+    <td>研发部副部长</td>
+</tr>
+<tr>
+    <td>浙江网新恒天软件有限公司</td>
+    <td>2024-5~2024-6</td>
+    <td>项目经理</td>
+</table>
+
 ## 技术栈
 
 ```text

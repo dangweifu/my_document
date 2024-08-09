@@ -35,16 +35,16 @@
 <tr>
     <td>北京雷铭置信科技</td>
     <td>2018-6~2020-11</td>
-    <td>Java开发</td>
+    <td>初级开发</td>
 <tr>
     <td>杭州阿优文化科技</td>
     <td>2020-12~2024-2</td>
-    <td>研发部副部长</td>
+    <td>高级开发（研发部副部长）</td>
 </tr>
 <tr>
     <td>浙江网新恒天软件有限公司</td>
-    <td>2024-5~2024-6</td>
-    <td>项目经理</td>
+    <td>2024-5~2024-7</td>
+    <td>高级开发</td>
 </table>
 
 ## 技术栈
@@ -72,7 +72,17 @@
 ```
 
 ## 项目经历
-### 项目一：7kid平台(2020年12月~至今)
+### 项目名称：广东电力交易统一认证系统（2024年5月~2024年7月）
+### 所属企业：浙江网新恒天
+### 项目使用技术：Springboot、Docker、Mysql、Redis、OSS、Nginx、Nacos
+### 项目简介：
+国家为促进电力交易市场化，立项电力交易平台。并将项目拆分为多个子项目外包至不同的单位做研发，
+而电力交易统一认证系统是其中的一个子项目，主要负责发电、储能、零售、批发等用户的统一认证管理，
+并对接其他单位完成上下游业务。
+### 主要职责：
+负责陕西区域下的统一认证和门户大屏相关业务开发和维护
+
+### 项目名称：7kid平台(2020年12月~2024年2月)
 #### 所属企业：[杭州阿优文化科技有限公司](https://www.66uu.cn/about/introduction)
 #### 项目使用技术：
 Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、Nginx、Vue、SkyWalking
@@ -132,7 +142,7 @@ Nacos、Springboot、Mybatis-plus、Redis、MySQL、RocketMQ、Dubbo、Docker、
 - ThreadLocal 内存泄漏
 - Zip压缩流未关闭 内存泄漏
 
-### 项目二：[隆道商城(2020年6月至2020年11月)](https://sc.longdaoyun.com/)
+### 项目名称：[隆道商城(2020年6月至2020年11月)](https://sc.longdaoyun.com/)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
 #### 项目使用技术：
 Apollo、SpringCloud全家桶、Springboot、Mybatis-plus、Seata、Redis、MySQL、ActiveMQ、Docker、Nginx、Vue、k8s、ElasticSearch
@@ -160,7 +170,7 @@ Apollo、SpringCloud全家桶、Springboot、Mybatis-plus、Seata、Redis、MySQ
   - 服务层优化：及时补货、超卖售后及时沟通与跟进，提供优惠券、退款等售后服务
 
 
-### 项目三：[全军武器装备采购信息网(2019年8月至2020年6月)](http://www.weain.mil.cn/)
+### 项目名称：[全军武器装备采购信息网(2019年8月至2020年6月)](http://www.weain.mil.cn/)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
 #### 项目使用技术：
 Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录
@@ -180,7 +190,7 @@ Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录
 - 对网络知识了解不够，调试困难重重
 - 内网环境开发，要求严格，军事化环境，所有随身携带的设备都必须报备，U盘等设备绝对不允许接入内网，否则以违反军律严肃处理
 
-### 项目四：[国家军民融合公共服务平台(2018年12月~2019年8月)](http://www.leimingtech.com/caseAll/newsMedia/0b0123bb6b64df0b016b6a1a8d81012c.shtml)
+### 项目名称：[国家军民融合公共服务平台(2018年12月~2019年8月)](http://www.leimingtech.com/caseAll/newsMedia/0b0123bb6b64df0b016b6a1a8d81012c.shtml)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
 #### 项目使用技术：
 Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录+Solr
@@ -194,7 +204,7 @@ Spring+SpringMVC+Mybatis+Freemarker+Mysql+Jsp+CDN缓存+CAS单点登录+Solr
 - 要求登录的验证码能够在后台设定字符取值、调整背景模糊度等
 - 解决方案：引入市面常用的验证码生成包，并扩展其相关接口，增加自定义字符取值功能、背景模糊度调整功能。
 
-### 项目五：[CMS内容管理系统(2018年8月~2018年11月)](http://www.leimingtech.com/CMSSolve/list.shtml)
+### 项目名称：[CMS内容管理系统(2018年8月~2018年11月)](http://www.leimingtech.com/CMSSolve/list.shtml)
 #### 所属企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
 #### 项目使用技术：
 Spring+SpringMVC+Hibernate+Freemarker+Mysql+Solr+Redis+Shiro
@@ -210,7 +220,7 @@ Spring+SpringMVC+Hibernate+Freemarker+Mysql+Solr+Redis+Shiro
 - 负责内容管理业务功能开发，其中包括对文章、视频、图片的管理（增删改查导入导出等）
 - 负责基于FreeMarker技术的静态页面的生成功能开发
 
-### 项目六：[中国医学教育题库(2018年6月~2018年7)](https://tk.ipmph.com/exam/a/adminlogin)
+### 项目名称：[中国医学教育题库(2018年6月~2018年7)](https://tk.ipmph.com/exam/a/adminlogin)
 #### 开发企业：[北京雷铭智信科技有限公司](http://www.leimingtech.com/index.shtml)
 #### 归属单位：[人民卫生电子音像出版社](https://www.pmph.com/main)
 #### 项目使用技术：
